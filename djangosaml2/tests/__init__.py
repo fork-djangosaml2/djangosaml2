@@ -31,10 +31,7 @@ except ImportError:
 from django.template import Template, Context
 from django.test import TestCase
 from django.test.client import RequestFactory
-try:
-    from django.utils.encoding import force_text
-except ImportError:
-    from django.utils.text import force_text
+from django.utils.encoding import force_str
 try:
     from django.utils.six.moves.urllib.parse import urlparse, parse_qs
 except ImportError:
@@ -258,7 +255,7 @@ class SAML2Tests(TestCase):
         url = urlparse(location)
         # as the RelayState is empty we have redirect to LOGIN_REDIRECT_URL
         self.assertEqual(url.path, settings.LOGIN_REDIRECT_URL)
-        self.assertEqual(force_text(new_user.id), self.client.session[SESSION_KEY])
+        self.assertEqual(force_str(new_user.id), self.client.session[SESSION_KEY])
 
     def test_assertion_consumer_service_no_session(self):
         settings.SAML_CONFIG = conf.create_conf(
