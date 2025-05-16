@@ -15,7 +15,7 @@
 import django
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.http import is_safe_url
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.module_loading import import_string
 from saml2.s_utils import UnknownSystemEntity
 
@@ -84,7 +84,7 @@ def fail_acs_response(request, *args, **kwargs):
 
 def is_safe_url_compat(url, allowed_hosts=None, require_https=False):
     if django.VERSION >= (1, 11):
-        return is_safe_url(url, allowed_hosts=allowed_hosts, require_https=require_https)
+        return url_has_allowed_host_and_scheme(url, allowed_hosts=allowed_hosts, require_https=require_https)
     assert len(allowed_hosts) == 1
     host = allowed_hosts.pop()
-    return is_safe_url(url, host=host)
+    return url_has_allowed_host_and_scheme(url, host=host)
