@@ -67,7 +67,7 @@ from djangosaml2_v0181post.utils import (
 )
 
 
-logger = logging.getLogger('djangosaml2')
+logger = logging.getLogger('djangosaml2_v0181post')
 
 
 def _set_subject_id(session, subject_id):
@@ -93,9 +93,9 @@ def callable_bool(value):
 
 def login(request,
           config_loader_path=None,
-          wayf_template='djangosaml2/wayf.html',
-          authorization_error_template='djangosaml2/auth_error.html',
-          post_binding_form_template='djangosaml2/post_binding_form.html'):
+          wayf_template='djangosaml2_v0181post/wayf.html',
+          authorization_error_template='djangosaml2_v0181post/auth_error.html',
+          post_binding_form_template='djangosaml2_v0181post/post_binding_form.html'):
     """SAML Authorization Request initiator
 
     This view initiates the SAML2 Authorization handshake
@@ -107,7 +107,7 @@ def login(request,
     binding is being used. You can customize this template to include custom
     branding and/or text explaining the automatic redirection process. Please
     see the example template in
-    templates/djangosaml2/example_post_binding_form.html
+    templates/djangosaml2_v0181post/example_post_binding_form.html
     If set to None or nonexistent template, default form from the saml2 library
     will be rendered.
     """
@@ -365,7 +365,7 @@ def assertion_consumer_service(request,
 @login_required
 def echo_attributes(request,
                     config_loader_path=None,
-                    template='djangosaml2/echo_attributes.html'):
+                    template='djangosaml2_v0181post/echo_attributes.html'):
     """Example view that echo the SAML attributes of an user"""
     state = StateCache(request.session)
     conf = get_config(config_loader_path, request)
@@ -442,7 +442,7 @@ def logout_service_post(request, *args, **kwargs):
 
 
 def do_logout_service(request, data, binding, config_loader_path=None, next_page=None,
-                   logout_error_template='djangosaml2/logout_error.html'):
+                   logout_error_template='djangosaml2_v0181post/logout_error.html'):
     """SAML Logout Response endpoint
 
     The IdP will send the logout response to this view,
@@ -507,7 +507,7 @@ def finish_logout(request, response, next_page=None):
         return django_logout(request, next_page=next_page)
     else:
         logger.error('Unknown error during the logout')
-        return render(request, "djangosaml2/logout_error.html", {})
+        return render(request, "djangosaml2_v0181post/logout_error.html", {})
 
 
 def metadata(request, config_loader_path=None, valid_for=None):
