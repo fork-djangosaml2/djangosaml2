@@ -22,7 +22,7 @@ from django.core.exceptions import (
     MultipleObjectsReturned, ImproperlyConfigured,
 )
 
-from djangosaml2.signals import pre_user_save
+from djangosaml2_v0181post.signals import pre_user_save
 
 
 logger = logging.getLogger('djangosaml2')

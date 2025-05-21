@@ -40,13 +40,13 @@ except ImportError:
 from saml2.config import SPConfig
 from saml2.s_utils import decode_base64_and_inflate, deflate_and_base64_encode
 
-from djangosaml2 import views
-from djangosaml2.cache import OutstandingQueriesCache
-from djangosaml2.conf import get_config
-from djangosaml2.tests import conf
-from djangosaml2.tests.auth_response import auth_response
-from djangosaml2.signals import post_authenticated
-from djangosaml2.views import finish_logout
+from djangosaml2_v0181post import views
+from djangosaml2_v0181post.cache import OutstandingQueriesCache
+from djangosaml2_v0181post.conf import get_config
+from djangosaml2_v0181post.tests import conf
+from djangosaml2_v0181post.tests.auth_response import auth_response
+from djangosaml2_v0181post.signals import post_authenticated
+from djangosaml2_v0181post.views import finish_logout
 
 User = get_user_model()
 
@@ -55,7 +55,7 @@ PY_VERSION = sys.version_info[:2]
 
 class SAML2Tests(TestCase):
 
-    urls = 'djangosaml2.tests.urls'
+    urls = 'djangosaml2_v0181post.tests.urls'
 
     def setUp(self):
         if hasattr(settings, 'SAML_ATTRIBUTE_MAPPING'):
@@ -542,14 +542,14 @@ def test_config_loader_with_real_conf(request):
 class ConfTests(TestCase):
 
     def test_custom_conf_loader(self):
-        config_loader_path = 'djangosaml2.tests.test_config_loader'
+        config_loader_path = 'djangosaml2_v0181post.tests.test_config_loader'
         request = RequestFactory().get('/bar/foo')
         conf = get_config(config_loader_path, request)
 
         self.assertEqual(conf.entityid, 'testentity')
 
     def test_custom_conf_loader_from_view(self):
-        config_loader_path = 'djangosaml2.tests.test_config_loader_with_real_conf'
+        config_loader_path = 'djangosaml2_v0181post.tests.test_config_loader_with_real_conf'
         request = RequestFactory().get('/login/')
         request.user = AnonymousUser()
         middleware = SessionMiddleware()

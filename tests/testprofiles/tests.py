@@ -20,7 +20,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User as DjangoUserModel
 from django.test import TestCase, override_settings
 
-from djangosaml2.backends import Saml2Backend
+from djangosaml2_v0181post.backends import Saml2Backend
 
 User = get_user_model()
 
