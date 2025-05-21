@@ -30,7 +30,7 @@ if sys.version_info < (3, 4):
 
 
 setup(
-    name='djangosaml2',
+    name='djangosaml2_v0181post',
     version='0.18.1.post1',
     description='pysaml2 integration for Django',
     long_description=read('README.rst'),
