@@ -25,7 +25,7 @@ from django.core.exceptions import (
 from djangosaml2_v0181post.signals import pre_user_save
 
 
-logger = logging.getLogger('djangosaml2')
+logger = logging.getLogger('djangosaml2_v0181post')
 
 
 def get_model(model_path):
@@ -49,7 +49,7 @@ def get_model(model_path):
 
 def get_saml_user_model():
     try:
-        # djangosaml2 custom user model
+        # djangosaml2_v0181post custom user model
         return get_model(settings.SAML_USER_MODEL)
     except AttributeError:
         try:
