@@ -26,7 +26,7 @@ def auth_response(session_id,
 
     Params:
         session_id: The session ID to generate the reponse for. Login set an
-            outstanding session ID, i.e. djangosaml2 waits for a response for
+            outstanding session ID, i.e. djangosaml2_v0181post waits for a response for
             that session.
         uid: Unique identifier for a User (will be present as an attribute in
             the answer). Ignored when attribute_statements is not ``None``.
