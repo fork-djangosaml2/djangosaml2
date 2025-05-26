@@ -55,19 +55,19 @@ from saml2.response import (
 from saml2.validate import ResponseLifetimeExceed, ToEarly
 from saml2.xmldsig import SIG_RSA_SHA1, SIG_RSA_SHA256  # support for SHA1 is required by spec
 
-from djangosaml2_v0181post.cache import IdentityCache, OutstandingQueriesCache
-from djangosaml2_v0181post.cache import StateCache
-from djangosaml2_v0181post.exceptions import IdPConfigurationMissing
-from djangosaml2_v0181post.conf import get_config
-from djangosaml2_v0181post.overrides import Saml2Client
-from djangosaml2_v0181post.signals import post_authenticated
-from djangosaml2_v0181post.utils import (
+from djangosaml2.cache import IdentityCache, OutstandingQueriesCache
+from djangosaml2.cache import StateCache
+from djangosaml2.exceptions import IdPConfigurationMissing
+from djangosaml2.conf import get_config
+from djangosaml2.overrides import Saml2Client
+from djangosaml2.signals import post_authenticated
+from djangosaml2.utils import (
     available_idps, fail_acs_response, get_custom_setting,
     get_idp_sso_supported_bindings, get_location, is_safe_url_compat,
 )
 
 
-logger = logging.getLogger('djangosaml2_v0181post')
+logger = logging.getLogger('djangosaml2')
 
 
 def _set_subject_id(session, subject_id):
@@ -93,9 +93,9 @@ def callable_bool(value):
 
 def login(request,
           config_loader_path=None,
-          wayf_template='djangosaml2_v0181post/wayf.html',
-          authorization_error_template='djangosaml2_v0181post/auth_error.html',
-          post_binding_form_template='djangosaml2_v0181post/post_binding_form.html'):
+          wayf_template='djangosaml2/wayf.html',
+          authorization_error_template='djangosaml2/auth_error.html',
+          post_binding_form_template='djangosaml2/post_binding_form.html'):
     """SAML Authorization Request initiator
 
     This view initiates the SAML2 Authorization handshake
@@ -107,7 +107,7 @@ def login(request,
     binding is being used. You can customize this template to include custom
     branding and/or text explaining the automatic redirection process. Please
     see the example template in
-    templates/djangosaml2_v0181post/example_post_binding_form.html
+    templates/djangosaml2/example_post_binding_form.html
     If set to None or nonexistent template, default form from the saml2 library
     will be rendered.
     """
@@ -273,7 +273,7 @@ def assertion_consumer_service(request,
     The IdP will send its response to this view, which
     will process it with pysaml2 help and log the user
     in using the custom Authorization backend
-    djangosaml2_v0181post.backends.Saml2Backend that should be
+    djangosaml2.backends.Saml2Backend that should be
     enabled in the settings.py
     """
     attribute_mapping = attribute_mapping or get_custom_setting('SAML_ATTRIBUTE_MAPPING', {'uid': ('username', )})
@@ -365,7 +365,7 @@ def assertion_consumer_service(request,
 @login_required
 def echo_attributes(request,
                     config_loader_path=None,
-                    template='djangosaml2_v0181post/echo_attributes.html'):
+                    template='djangosaml2/echo_attributes.html'):
     """Example view that echo the SAML attributes of an user"""
     state = StateCache(request.session)
     conf = get_config(config_loader_path, request)
@@ -442,7 +442,7 @@ def logout_service_post(request, *args, **kwargs):
 
 
 def do_logout_service(request, data, binding, config_loader_path=None, next_page=None,
-                   logout_error_template='djangosaml2_v0181post/logout_error.html'):
+                   logout_error_template='djangosaml2/logout_error.html'):
     """SAML Logout Response endpoint
 
     The IdP will send the logout response to this view,
@@ -507,7 +507,7 @@ def finish_logout(request, response, next_page=None):
         return django_logout(request, next_page=next_page)
     else:
         logger.error('Unknown error during the logout')
-        return render(request, "djangosaml2_v0181post/logout_error.html", {})
+        return render(request, "djangosaml2/logout_error.html", {})
 
 
 def metadata(request, config_loader_path=None, valid_for=None):

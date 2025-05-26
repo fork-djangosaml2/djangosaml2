@@ -1,4 +1,5 @@
-# Copyright (C) 2012 Yaco Sistemas (http://www.yaco.es)
+# Copyright (C) 2010-2012 Yaco Sistemas (http://www.yaco.es)
+# Copyright (C) 2009 Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,11 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.conf.urls import include
-from django.contrib import admin
 from django.urls import re_path
-
-from djangosaml2_v0181post import views
+from djangosaml2 import views
 
 
 urlpatterns = [
@@ -26,7 +24,4 @@ urlpatterns = [
     re_path(r'^ls/$', views.logout_service, name='saml2_ls'),
     re_path(r'^ls/post/$', views.logout_service_post, name='saml2_ls_post'),
     re_path(r'^metadata/$', views.metadata, name='saml2_metadata'),
-
-    # this is needed for the tests
-    re_path(r'^admin/', include(admin.site.urls)),
 ]
